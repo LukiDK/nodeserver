@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { supabase } from "./Config/configSupabase.js";
+import { supabase } from "./config/configSupabase.js";
 
 dotenv.config();
 

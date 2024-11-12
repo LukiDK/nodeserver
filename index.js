@@ -1,4 +1,7 @@
 import express from "express";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
@@ -14,6 +17,10 @@ app.get("/contact", (req, res) => {
   res.send("Dette er kontakt siden...");
 });
 
-app.listen(4242, () => {
+app.get("/products", (req, res) => {
+  res.send("Dette er produkter siden...");
+});
+
+app.listen(process.env.PORT, () => {
   console.log("Express server kører....");
 });

@@ -44,9 +44,11 @@ app.get("/artists", async (req, res) => {
     throw new Error(error.message);
   }
 
+
+
   let html = "<h1>Artists</h1><ul>";
   data.forEach((artist) => {
-    html += `<li><span style="font-weight: bold">${artist.name}</span> ${artist.description}</li>`;
+    html += `<li><span style="font-weight: bold">${artist.name}</span><img style="max-width: 100px" src="${process.env.SUPABASE_URL}/storage/v1/object/public/images/${artist.image}"/></li>`;
   });
   html += "</ul>";
 

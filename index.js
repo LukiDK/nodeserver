@@ -1,5 +1,6 @@
 import express from "express";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+import { supabase } from "./Config/configSupabase.js";
 
 dotenv.config();
 
@@ -19,6 +20,16 @@ app.get("/contact", (req, res) => {
 
 app.get("/products", (req, res) => {
   res.send("Dette er produkter siden...");
+});
+
+app.get("/test", async (req, res) => {
+  let { data, error } = await supabase.from("songs").select("id, title");
+  if (error) {
+    throw new Error(error.message);
+  } else {
+    console.log(data);
+    return data;
+  }
 });
 
 app.listen(process.env.PORT, () => {

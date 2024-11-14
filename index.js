@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { supabase } from "./config/configSupabase.js";
 import { Person } from "./assets/js/personModel.js";
+import { Car } from "./assets/js/carModel.js";
 
 dotenv.config();
 
@@ -98,6 +99,56 @@ app.get("/persons", async (req, res) => {
     console.log(greetings.presentGreeting());
     console.log(greetings.presentAge());
     console.log(greetings.presentCard());
+  });
+
+  res.end();
+});
+
+app.get("/cars", async (req, res) => {
+  let car1 = {
+    brand: "Toyota",
+    model: "Corolla",
+    propellent: "Gasoline",
+    mileage: 1000,
+    year: 2020,
+    color: "Red",
+    km: 15000,
+    description: "A reliable and fuel-efficient car.",
+    price: 20000,
+  };
+
+  let car2 = {
+    brand: "Tesla",
+    model: "Model S",
+    propellent: "Electric",
+    mileage: 450,
+    year: 2021,
+    color: "Black",
+    km: 5000,
+    description: "A high-performance electric vehicle.",
+    price: 80000,
+  };
+
+  let car3 = {
+    brand: "Ford",
+    model: "Mustang",
+    propellent: "Gasoline",
+    mileage: 200,
+    year: 2019,
+    color: "Blue",
+    km: 20000,
+    description: "A classic American muscle car.",
+    price: 35000,
+  };
+
+  let cars = [car1, car2, car3];
+
+  cars.forEach((car) => {
+    let carInfo = new Car(car.brand, car.model, car.propellent, car.mileage, car.year, car.color, car.km, car.description, car.price);
+    console.log(carInfo.presentCar());
+    console.log(carInfo.presentAvgDistance().toFixed(0) + " km/year");
+    console.log(carInfo.presentChargePerYear().toFixed(0) + " refuel/charges per year");
+    
   });
 
   res.end();

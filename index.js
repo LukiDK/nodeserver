@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { supabase } from "./config/configSupabase.js";
-import { Person, Age, Card } from "./assets/js/persons.js";
+import { Person } from "./assets/js/personModel.js";
 
 dotenv.config();
 
@@ -63,7 +63,7 @@ app.get("/persons", async (req, res) => {
   let person1 = {
     fname: "John",
     lname: "Doe",
-    mail: "JohnDoegmail.com",
+    mail: "JohnDoe@gmail.com",
     birthday: 1990,
     job: "Baker",
     gender: "male",
@@ -71,7 +71,7 @@ app.get("/persons", async (req, res) => {
   let person2 = {
     fname: "Jane",
     lname: "Doe",
-    mail: "JaneDoegmail.com",
+    mail: "JaneDoe@gmail.com",
     birthday: 1995,
     job: "Carpenter",
     gender: "male",
@@ -88,14 +88,16 @@ app.get("/persons", async (req, res) => {
   let persones = [person1, person2, person3];
 
   persones.forEach((person) => {
-    let greetings = new Person(person.fname, person.lname);
-    console.log(greetings.present());
-
-    let card = new Card(person.fname, person.lname, person.mail, person.job);
-    console.log(card.present());
-
-    let age = new Age(person.birthday);
-    console.log(age.present());
+    let greetings = new Person(
+      person.fname,
+      person.lname,
+      person.birthday,
+      person.mail,
+      person.job
+    );
+    console.log(greetings.presentGreeting());
+    console.log(greetings.presentAge());
+    console.log(greetings.presentCard());
   });
 
   res.end();

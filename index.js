@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { supabase } from "./config/configSupabase.js";
 import { Person } from "./models/personModel.js";
 import { Car } from "./models/carModel.js";
-import { SongModel } from "./models/songModel.js";
+import { SongModel, AlbumModel, ArtistModel } from "./models/songModel.js";
 
 dotenv.config();
 
@@ -13,8 +13,28 @@ app.get("/", (req, res) => {
   res.send("Hej verden!");
 });
 
-app.get("/test", async (req, res) => {
+app.get("/test1", async (req, res) => {
   let songs = await SongModel.getAllRecords();
+  console.log(songs);
+
+  let html = `
+  <h1>Testing Yesing</h1>
+  `;
+  res.send(html);
+});
+
+app.get("/test2", async (req, res) => {
+  let songs = await ArtistModel.getAllRecords();
+  console.log(songs);
+
+  let html = `
+  <h1>Testing Yesing</h1>
+  `;
+  res.send(html);
+});
+
+app.get("/test3", async (req, res) => {
+  let songs = await AlbumModel.getAllRecords();
   console.log(songs);
 
   let html = `

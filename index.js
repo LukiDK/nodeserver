@@ -4,6 +4,7 @@ import { supabase } from "./config/configSupabase.js";
 import { Person } from "./models/personModel.js";
 import { Car } from "./models/carModel.js";
 import { SongModel, AlbumModel, ArtistModel } from "./models/songModel.js";
+import { songController } from "./controller/songController.js";
 
 dotenv.config();
 
@@ -43,21 +44,7 @@ app.get("/test3", async (req, res) => {
   res.send(html);
 });
 
-app.get("/songs", async (req, res) => {
-  let { data, error } = await supabase.from("songs").select("id, title");
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  let html = "<h1>Songs</h1><ul>";
-  data.forEach((song) => {
-    html += `<li>${song.id}: ${song.title}</li>`;
-  });
-  html += "</ul>";
-
-  res.send(html);
-  res.end();
-});
+app.use(songController);
 
 app.get("/artists", async (req, res) => {
   let { data, error } = await supabase.from("artists").select("*");

@@ -4,7 +4,11 @@ import { supabase } from "./config/configSupabase.js";
 import { Person } from "./models/personModel.js";
 import { Car } from "./models/carModel.js";
 import { SongModel, AlbumModel, ArtistModel } from "./models/songModel.js";
-import { songController } from "./controller/songController.js";
+import {
+  songController,
+  artistController,
+  albumController,
+} from "./controller/songController.js";
 
 dotenv.config();
 
@@ -14,69 +18,11 @@ app.get("/", (req, res) => {
   res.send("Hej verden!");
 });
 
-app.get("/test1", async (req, res) => {
-  let songs = await SongModel.getAllRecords();
-  console.log(songs);
-
-  let html = `
-  <h1>Testing Yesing</h1>
-  `;
-  res.send(html);
-});
-
-app.get("/test2", async (req, res) => {
-  let songs = await ArtistModel.getAllRecords();
-  console.log(songs);
-
-  let html = `
-  <h1>Testing Yesing</h1>
-  `;
-  res.send(html);
-});
-
-app.get("/test3", async (req, res) => {
-  let songs = await AlbumModel.getAllRecords();
-  console.log(songs);
-
-  let html = `
-  <h1>Testing Yesing</h1>
-  `;
-  res.send(html);
-});
-
 app.use(songController);
 
-app.get("/artists", async (req, res) => {
-  let { data, error } = await supabase.from("artists").select("*");
-  if (error) {
-    throw new Error(error.message);
-  }
+app.use(artistController);
 
-  let html = "<h1>Artists</h1><ul>";
-  data.forEach((artist) => {
-    html += `<li><span style="font-weight: bold">${artist.name}</span><img style="max-width: 100px" src="${process.env.SUPABASE_URL}/storage/v1/object/public/images/${artist.image}"/></li>`;
-  });
-  html += "</ul>";
-
-  res.send(html);
-  res.end();
-});
-
-app.get("/albums", async (req, res) => {
-  let { data, error } = await supabase.from("albums").select("title, image");
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  let html = "<h1>Albums</h1><ul>";
-  data.forEach((album) => {
-    html += `<li><img src="${album.image}" alt="${album.title}" /> ${album.title}</li>`;
-  });
-  html += "</ul>";
-
-  res.send(html);
-  res.end();
-});
+app.use(albumController);
 
 app.get("/persons", async (req, res) => {
   let person1 = {

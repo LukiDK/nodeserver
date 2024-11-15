@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import { supabase } from "./config/configSupabase.js";
-import { Person } from "./assets/js/personModel.js";
-import { Car } from "./assets/js/carModel.js";
+import { Person } from "./models/personModel.js";
+import { Car } from "./models/carModel.js";
+import { SongModel } from "./models/songModel.js";
 
 dotenv.config();
 
@@ -10,6 +11,16 @@ const app = express();
 
 app.get("/", (req, res) => {
   res.send("Hej verden!");
+});
+
+app.get("/test", async (req, res) => {
+  let songs = await SongModel.getAllRecords();
+  console.log(songs);
+
+  let html = `
+  <h1>Testing Yesing</h1>
+  `;
+  res.send(html);
 });
 
 app.get("/songs", async (req, res) => {
@@ -144,11 +155,22 @@ app.get("/cars", async (req, res) => {
   let cars = [car1, car2, car3];
 
   cars.forEach((car) => {
-    let carInfo = new Car(car.brand, car.model, car.propellent, car.mileage, car.year, car.color, car.km, car.description, car.price);
+    let carInfo = new Car(
+      car.brand,
+      car.model,
+      car.propellent,
+      car.mileage,
+      car.year,
+      car.color,
+      car.km,
+      car.description,
+      car.price
+    );
     console.log(carInfo.presentCar());
     console.log(carInfo.presentAvgDistance().toFixed(0) + " km/year");
-    console.log(carInfo.presentChargePerYear().toFixed(0) + " refuel/charges per year");
-    
+    console.log(
+      carInfo.presentChargePerYear().toFixed(0) + " refuel/charges per year"
+    );
   });
 
   res.end();

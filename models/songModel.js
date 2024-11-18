@@ -16,6 +16,20 @@ export class SongModel {
       console.error(`Fejl: kan ikke hente sangliste, ${error}`);
     }
   }
+
+  static async getRecordById(id) {
+    let { data, error } = await supabase
+      .from("songs")
+      .select("title")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return data;
+    }
+  }
 }
 
 export class ArtistModel {
@@ -30,6 +44,20 @@ export class ArtistModel {
       }
     } catch (error) {
       console.error(`Fejl: kan ikke hente artistliste, ${error}`);
+    }
+  }
+
+  static async getRecordById(id) {
+    let { data, error } = await supabase
+      .from("artists")
+      .select("name")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return data;
     }
   }
 }
@@ -48,6 +76,20 @@ export class AlbumModel {
       }
     } catch (error) {
       console.error(`Fejl: kan ikke hente albumliste, ${error}`);
+    }
+  }
+
+  static async getRecordById(id) {
+    let { data, error } = await supabase
+      .from("albums")
+      .select("title")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return data;
     }
   }
 }

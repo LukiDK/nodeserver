@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import { supabase } from "./config/configSupabase.js";
 import { Person } from "./models/personModel.js";
 import { Car } from "./models/carModel.js";
-import { SongModel, AlbumModel, ArtistModel } from "./models/songModel.js";
 import {
   songController,
   artistController,

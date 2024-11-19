@@ -80,9 +80,12 @@ export class AlbumModel {
     }
   }
 
-  static async deleteRecord(id) {
+  static async deleteRecord(formdata) {
     try {
-      let { data, error } = await supabase.from("albums").delete().eq("id", id);
+      let { data, error } = await supabase
+        .from("albums")
+        .delete()
+        .eq("id", formdata);
       if (error) {
         throw new Error(error.message);
       } else {

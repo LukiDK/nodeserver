@@ -74,12 +74,12 @@ export class ArtistModel {
     }
   }
 
-  static async deleteRecord(id) {
+  static async deleteRecord(formdata) {
     try {
       let { data, error } = await supabase
         .from("artists")
         .delete()
-        .eq("id", id)
+        .eq("id", formdata)
         .select();
       if (error) {
         throw new Error(error.message);

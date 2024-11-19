@@ -1,25 +1,25 @@
 import { supabase } from "../config/configSupabase.js";
 
-export class SongModel {
+export class AlbumModel {
   static async getAllRecords() {
     try {
       // Kald til database
       let { data, error } = await supabase
-        .from("songs")
-        .select("id, title, content, created_at");
+        .from("albums")
+        .select("id, title, artist_id:artists(name), release_date");
       if (error) {
         throw new Error(error.message);
       } else {
         return data;
       }
     } catch (error) {
-      console.error(`Fejl: kan ikke hente sangliste, ${error}`);
+      console.error(`Fejl: kan ikke hente albumliste, ${error}`);
     }
   }
 
   static async getRecordById(id) {
     let { data, error } = await supabase
-      .from("songs")
+      .from("albums")
       .select("title")
       .eq("id", id)
       .single();
@@ -34,13 +34,14 @@ export class SongModel {
   static async createRecord(formdata) {
     try {
       let { data, error } = await supabase
-        .from("songs")
+        .from("albums")
         .insert([
           {
-            title: formdata.title,
-            content: formdata.content,
-            lyrics: formdata.lyrics,
             artist_id: formdata.artist_id,
+            title: formdata.title,
+            description: formdata.description,
+            image: formdata.image,
+            release_date: formdata.release_date,
           },
         ])
         .select();
@@ -50,7 +51,7 @@ export class SongModel {
         return data;
       }
     } catch (error) {
-      console.error(`Fejl: kan ikke oprette sang, ${error}`);
+      console.error(`Fejl: kan ikke oprette album, ${error}`);
     }
   }
 }

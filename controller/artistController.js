@@ -23,3 +23,8 @@ artistController.put("/artists", async (req, res) => {
   const data = await ArtistModel.updateRecord(req.body);
   res.send(data);
 });
+
+artistController.delete("/artists", async (req, res) => {
+  const data = await ArtistModel.deleteRecord(req.body);
+  res.send(data);
+});

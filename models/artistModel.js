@@ -73,4 +73,21 @@ export class ArtistModel {
       console.error(`Fejl: kunne ikke opdatere artist, ${error}`);
     }
   }
+
+  static async deleteRecord(id) {
+    try {
+      let { data, error } = await supabase
+        .from("artists")
+        .delete()
+        .eq("id", id)
+        .select();
+      if (error) {
+        throw new Error(error.message);
+      } else {
+        return data;
+      }
+    } catch (error) {
+      console.error(`Fejl: kunne ikke slette artist, ${error}`);
+    }
+  }
 }

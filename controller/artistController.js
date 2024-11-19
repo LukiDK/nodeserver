@@ -18,3 +18,8 @@ artistController.get("/artists/:id([0-9A-Za-z]*)", async (req, res) => {
   const single = await ArtistModel.getRecordById(req.params.id);
   res.send(single);
 });
+
+artistController.put("/artists", async (req, res) => {
+  const data = await ArtistModel.updateRecord(req.body);
+  res.send(data);
+});

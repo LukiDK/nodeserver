@@ -54,4 +54,29 @@ export class AlbumModel {
       console.error(`Fejl: kan ikke oprette album, ${error}`);
     }
   }
+
+  static async updateRecord(formdata) {
+    try {
+      let { data, error } = await supabase
+        .from("albums")
+        .update([
+          {
+            artist_id: formdata.artist_id,
+            title: formdata.title,
+            description: formdata.description,
+            image: formdata.image,
+            release_date: formdata.release_date,
+          },
+        ])
+        .eq("id", formdata.id)
+        .select();
+      if (error) {
+        throw new Error(error.message);
+      } else {
+        return data;
+      }
+    } catch (error) {
+      console.error(`Fejl: kunne ikke opdatere albums, ${error}`);
+    }
+  }
 }

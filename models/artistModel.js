@@ -50,4 +50,27 @@ export class ArtistModel {
       console.error(`Fejl: kan ikke oprette artist, ${error}`);
     }
   }
+
+  static async updateRecord(formdata) {
+    try {
+      let { data, error } = await supabase
+        .from("artists")
+        .update([
+          {
+            name: formdata.name,
+            description: formdata.description,
+            image: formdata.image,
+          },
+        ])
+        .eq("id", formdata.id)
+        .select();
+      if (error) {
+        throw new Error(error.message);
+      } else {
+        return data;
+      }
+    } catch (error) {
+      console.error(`Fejl: kunne ikke opdatere artist, ${error}`);
+    }
+  }
 }

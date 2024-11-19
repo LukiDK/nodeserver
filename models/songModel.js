@@ -53,4 +53,28 @@ export class SongModel {
       console.error(`Fejl: kan ikke oprette sang, ${error}`);
     }
   }
+
+  static async updateRecord(formdata) {
+    try {
+      let { data, error } = await supabase
+        .from("songs")
+        .update([
+          {
+            title: formdata.title,
+            content: formdata.content,
+            lyrics: formdata.lyrics,
+            artist_id: formdata.artist_id,
+          },
+        ])
+        .eq("id", formdata.id)
+        .select();
+      if (error) {
+        throw new Error(error.message);
+      } else {
+        return data;
+      }
+    } catch (error) {
+      console.error(`Fejl: kunne ikke opdatere sang ${error}`);
+    }
+  }
 }

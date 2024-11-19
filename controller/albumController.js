@@ -17,3 +17,8 @@ albumController.get("/albums/:id([0-9A-Za-z]*)", async (req, res) => {
   const single = await AlbumModel.getRecordById(req.params.id);
   res.send(single);
 });
+
+albumController.put("/albums", async (req, res) => {
+  const data = await AlbumModel.updateRecord(req.body);
+  res.send(data);
+});

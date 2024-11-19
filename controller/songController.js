@@ -20,3 +20,8 @@ songController.get("/songs/:id([0-9A-Za-z]*)", async (req, res) => {
   const single = await SongModel.getRecordById(req.params.id);
   res.send(single);
 });
+
+songController.put("/songs", async (req, res) => {
+  const data = await SongModel.updateRecord(req.body);
+  res.send(data);
+});
